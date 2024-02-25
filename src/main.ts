@@ -12,7 +12,10 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
 
-  const config = new DocumentBuilder().setTitle('RoundOut API').build();
+  const config = new DocumentBuilder()
+    .setTitle('RoundOut API')
+    .addBearerAuth()
+    .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 

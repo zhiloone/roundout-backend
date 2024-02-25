@@ -6,18 +6,23 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { randomUUID } from 'crypto';
-import { UserRepository } from '../user/resources/user.repository';
-import { AuthErrors } from './auth.errors';
-import { LoginDto } from './dto/login.dto';
-import { RegisterDto } from './dto/register.dto';
-import { comparePassword, hashPassword } from './utils/hash.utils';
+import { UserRepository } from '../../user/resources/user.repository';
+import { AuthErrors } from '../auth.errors';
+import { LoginDto } from '../dto/login.dto';
+import { RegisterDto } from '../dto/register.dto';
+import { AuthenticatedUser } from '../types/authenticatedUser.type';
+import { comparePassword, hashPassword } from '../utils/hash.utils';
+import { FirebaseService } from './firebase.service';
 
 @Injectable()
 export class AuthService {
   private readonly logger = new Logger(AuthService.name);
-  constructor(private readonly userRepo: UserRepository) {}
+  constructor(
+    private readonly userRepo: UserRepository,
+    private readonly firebaseService: FirebaseService,
+  ) {}
 
-  async login(dto: LoginDto) {
+  async login(dto: LoginDto): Promise<AuthenticatedUser> {
     this.logger.debug(`Trying to login user with email ${dto.email}...`);
 
     const user = await this.userRepo.findOne(dto.email);
@@ -46,9 +51,7 @@ export class AuthService {
     }
 
     const uuid = randomUUID();
-
-    // TODO: chamar firebase p/ gerar token custom
-
+    const jwt = await this.firebaseService.createToken(uuid);
     const hashedPassword = await hashPassword(dto.password);
 
     await this.userRepo.createUser({
@@ -57,6 +60,6 @@ export class AuthService {
       password: hashedPassword,
     });
 
-    return 'token';
+    return { jwt };
   }
 }

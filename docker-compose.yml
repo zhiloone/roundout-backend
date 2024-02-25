@@ -1,0 +1,25 @@
+version: '3.9'
+name: roundout
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./dockerfile
+    container_name: 'roundout_backend'
+    env_file: .env.development
+    ports:
+      - '8080:8080'
+    volumes:
+      - './src:/app/src'
+      - './tsconfig.json:/app/tsconfig.json'
+      - './package.json:/app/package.json'
+
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16-alpine
+    env_file: .env.development
+    container_name: postgres
+    ports:
+      - '5432:5432'

@@ -1,7 +1,8 @@
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './modules/app.module';
-import { Logger } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
+import { AppModule } from './modules/app.module';
 
 const logger = new Logger('Main');
 async function bootstrap() {
@@ -9,7 +10,13 @@ async function bootstrap() {
 
   app.use(helmet());
 
-  const port = process.env.PORT || 1234;
+  app.useGlobalPipes(new ValidationPipe());
+
+  const config = new DocumentBuilder().setTitle('RoundOut API').build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
+
+  const port = process.env.PORT || 8080;
   await app.listen(port);
   logger.log(`API listening on port ${port}`);
 }

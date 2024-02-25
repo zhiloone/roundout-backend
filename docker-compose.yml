@@ -19,7 +19,11 @@ services:
 
   postgres:
     image: postgres:16-alpine
-    env_file: .env.development
+    environment:
+      - DATABASE_URL=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=roundout_db
     container_name: postgres
     ports:
       - '5432:5432'

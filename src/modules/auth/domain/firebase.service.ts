@@ -17,9 +17,9 @@ export class FirebaseService {
       .auth();
   }
 
-  async createToken(uid: string) {
+  async createToken(uid: string, additionalClaims = {}) {
     this.logger.debug(`Creating a custom token...`);
-    return await this.auth.createCustomToken(uid);
+    return await this.auth.createCustomToken(uid, additionalClaims);
   }
 
   async validateToken(token: string) {

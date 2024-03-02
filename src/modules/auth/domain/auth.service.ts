@@ -10,7 +10,6 @@ import { UserRepository } from '../../user/resources/user.repository';
 import { AuthErrors } from '../auth.errors';
 import { LoginDto } from '../dto/login.dto';
 import { RegisterDto } from '../dto/register.dto';
-import { AuthenticatedUser } from '../types/authenticatedUser.type';
 import { comparePassword, hashPassword } from '../utils/hash.utils';
 import { FirebaseService } from './firebase.service';
 
@@ -22,7 +21,7 @@ export class AuthService {
     private readonly firebaseService: FirebaseService,
   ) {}
 
-  async login(dto: LoginDto): Promise<AuthenticatedUser> {
+  async login(dto: LoginDto) {
     this.logger.debug(`Trying to login user with email ${dto.email}...`);
 
     const user = await this.userRepo.findOne(dto.email);
@@ -37,8 +36,10 @@ export class AuthService {
       throw new UnauthorizedException(AuthErrors.CREDENTIALS_MISMATCH);
     }
 
+    const customToken = await this.firebaseService.createToken(user.id);
+
     delete user.password;
-    return user;
+    return { user, customToken };
   }
 
   async register(dto: RegisterDto) {
@@ -51,7 +52,9 @@ export class AuthService {
     }
 
     const uuid = randomUUID();
-    const jwt = await this.firebaseService.createToken(uuid);
+    const customToken = await this.firebaseService.createToken(uuid, {
+      email: dto.email,
+    });
     const hashedPassword = await hashPassword(dto.password);
 
     await this.userRepo.createUser({
@@ -60,6 +63,6 @@ export class AuthService {
       password: hashedPassword,
     });
 
-    return { jwt };
+    return { customToken };
   }
 }

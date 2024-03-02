@@ -9,6 +9,7 @@ import { randomUUID } from 'crypto';
 import { UserRepository } from '../../user/resources/user.repository';
 import { AuthErrors } from '../auth.errors';
 import { LoginDto } from '../dto/login.dto';
+import { RecoverPasswordDto } from '../dto/recoverPassword.dto';
 import { RegisterDto } from '../dto/register.dto';
 import { comparePassword, hashPassword } from '../utils/hash.utils';
 import { FirebaseService } from './firebase.service';
@@ -45,9 +46,9 @@ export class AuthService {
   async register(dto: RegisterDto) {
     this.logger.debug(`Trying to register user with email ${dto.email}...`);
 
-    const user = await this.userRepo.findOne(dto.email);
+    const existingUser = await this.userRepo.findOne(dto.email);
 
-    if (user) {
+    if (existingUser) {
       throw new BadRequestException(AuthErrors.ALREADY_REGISTERED);
     }
 
@@ -57,12 +58,17 @@ export class AuthService {
     });
     const hashedPassword = await hashPassword(dto.password);
 
-    await this.userRepo.createUser({
+    const user = await this.userRepo.createUser({
       ...dto,
       id: uuid,
       password: hashedPassword,
     });
+    delete user.password;
 
-    return { customToken };
+    return { user, customToken };
+  }
+
+  async resetPassword(dto: RecoverPasswordDto) {
+    await this.firebaseService.resetPassword(dto.email);
   }
 }

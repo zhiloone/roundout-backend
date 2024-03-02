@@ -9,6 +9,7 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './domain/auth.service';
 import { LoginDto } from './dto/login.dto';
+import { RecoverPasswordDto } from './dto/recoverPassword.dto';
 import { RegisterDto } from './dto/register.dto';
 import { FirebaseAuthGuard } from './guards/firebase.guard';
 
@@ -27,6 +28,12 @@ export class AuthController {
   @Post('register')
   async register(@Body() dto: RegisterDto) {
     return await this.authService.register(dto);
+  }
+
+  @Post('reset-password')
+  @HttpCode(HttpStatus.OK)
+  async resetPassword(@Body() dto: RecoverPasswordDto) {
+    return await this.authService.resetPassword(dto);
   }
 
   @UseGuards(FirebaseAuthGuard)

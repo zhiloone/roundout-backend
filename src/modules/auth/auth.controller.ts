@@ -1,22 +1,16 @@
-import {
-  Body,
-  Controller,
-  HttpCode,
-  HttpStatus,
-  Post,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './domain/auth.service';
 import { LoginDto } from './dto/login.dto';
 import { RecoverPasswordDto } from './dto/recoverPassword.dto';
 import { RegisterDto } from './dto/register.dto';
-import { FirebaseAuthGuard } from './guards/firebase.guard';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+
+  // TODO: route for Swagger: log in with customToken -> get firebase token
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
@@ -35,9 +29,4 @@ export class AuthController {
   async resetPassword(@Body() dto: RecoverPasswordDto) {
     return await this.authService.resetPassword(dto);
   }
-
-  @UseGuards(FirebaseAuthGuard)
-  @HttpCode(HttpStatus.OK)
-  @Post('validate')
-  async validate() {}
 }

@@ -1,18 +1,53 @@
 import { Controller, Get, Req, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import {
+  Crud,
+  CrudController,
+  CrudRequest,
+  Override,
+  ParsedRequest,
+} from '@nestjsx/crud';
+import { nestjsxCrudIdParam } from 'src/common/nestjsxCrudBaseParams';
+import { User } from 'src/entities/user.entity';
 import { FirebaseAuthGuard } from '../auth/guards/firebase.guard';
 import { FirebaseAuthenticatedRequest } from '../auth/types/firebaseAuthenticatedRequest.type';
 import { UserService } from './user.service';
 
 @ApiBearerAuth()
 @ApiTags('users')
+@Crud({
+  model: {
+    type: User,
+  },
+  params: {
+    ...nestjsxCrudIdParam,
+  },
+  routes: {
+    only: ['getOneBase', 'getManyBase'],
+  },
+  query: {
+    exclude: ['password'],
+  },
+})
 @Controller('users')
-export class UserController {
-  constructor(private readonly userService: UserService) {}
+export class UserController implements CrudController<User> {
+  constructor(public service: UserService) {}
 
   @UseGuards(FirebaseAuthGuard)
   @Get('me')
   async me(@Req() req: FirebaseAuthenticatedRequest) {
-    return await this.userService.getMe(req);
+    return await this.service.getMe(req);
+  }
+
+  @Override('getManyBase')
+  @Get()
+  async getMany(@ParsedRequest() req: CrudRequest) {
+    return await this.service.getMany(req);
+  }
+
+  @Override('getOneBase')
+  @Get(':id')
+  async getOne(@ParsedRequest() req: CrudRequest) {
+    return await this.service.getOne(req);
   }
 }

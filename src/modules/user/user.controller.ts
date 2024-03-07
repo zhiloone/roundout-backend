@@ -8,7 +8,7 @@ import {
   ParsedRequest,
 } from '@nestjsx/crud';
 import { nestjsxCrudIdParam } from 'src/common/nestjsxCrudBaseParams';
-import { User } from 'src/entities/user.entity';
+import { UserEntity } from 'src/entities/user.entity';
 import { FirebaseAuthGuard } from '../auth/guards/firebase.guard';
 import { FirebaseAuthenticatedRequest } from '../auth/types/firebaseAuthenticatedRequest.type';
 import { UserService } from './user.service';
@@ -17,7 +17,7 @@ import { UserService } from './user.service';
 @ApiTags('users')
 @Crud({
   model: {
-    type: User,
+    type: UserEntity,
   },
   params: {
     ...nestjsxCrudIdParam,
@@ -30,7 +30,7 @@ import { UserService } from './user.service';
   },
 })
 @Controller('users')
-export class UserController implements CrudController<User> {
+export class UserController implements CrudController<UserEntity> {
   constructor(public service: UserService) {}
 
   @UseGuards(FirebaseAuthGuard)

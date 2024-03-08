@@ -1,5 +1,6 @@
-import { Column, Entity, JoinTable, ManyToMany } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
+import { MatchEntity } from './match.entity';
 import { UserEntity } from './user.entity';
 
 export enum TeamFormat {
@@ -28,4 +29,9 @@ export class TeamEntity extends BaseEntity {
     },
   })
   users: UserEntity[];
+
+  @OneToMany(() => MatchEntity, (match) => match.winningTeam, {
+    cascade: true,
+  })
+  matchesWon: MatchEntity[];
 }

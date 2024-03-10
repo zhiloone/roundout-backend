@@ -34,4 +34,13 @@ export class CompetitionEntity extends BaseEntity {
 
   @Column({ type: 'text', name: 'team_format' })
   teamFormat: TeamFormat;
+
+  // @Column({ type: 'text', name: 'knockout_match_configuration_type' })
+  // knockoutMatchConfigurationType: MatchConfigurationType;
+
+  // @Column({ nullable: true, name: 'knockout_match_configuration_id' })
+  // knockoutMatchConfigurationId: number;
+  // @ManyToOne(() => MatchConfigurationEntity)
+  // @JoinColumn({ name: 'knockoutMatchConfigurationId' })
+  // knockoutMatchConfiguration: MatchConfigurationEntity;
 }

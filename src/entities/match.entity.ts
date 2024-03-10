@@ -9,7 +9,7 @@ export enum MatchPhase {
   SEMI_FINALS = 'Semifinal',
   QUARTER_FINALS = 'Quartas de final',
   ROUND_OT_SIXTEEN = 'Oitavas de final',
-  GROUPS = 'Fase de grupos',
+  ROUND_ROBIN = 'Fase de grupos',
 }
 
 export const MatchPhaseIndex: { [key in MatchPhase]: number } = {
@@ -17,7 +17,7 @@ export const MatchPhaseIndex: { [key in MatchPhase]: number } = {
   [MatchPhase.SEMI_FINALS]: 3,
   [MatchPhase.QUARTER_FINALS]: 2,
   [MatchPhase.ROUND_OT_SIXTEEN]: 1,
-  [MatchPhase.GROUPS]: 0,
+  [MatchPhase.ROUND_ROBIN]: 0,
 };
 
 @Entity('matches')

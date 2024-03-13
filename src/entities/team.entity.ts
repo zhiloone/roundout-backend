@@ -1,7 +1,7 @@
 import { Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
+import { AthleteEntity } from './athlete.entity';
 import { BaseEntity } from './base.entity';
 import { MatchEntity } from './match.entity';
-import { UserEntity } from './user.entity';
 
 export enum TeamFormat {
   SINGLES = 'Individual',
@@ -16,7 +16,7 @@ export class TeamEntity extends BaseEntity {
   @Column({ type: 'text', name: 'team_format' })
   teamFormat: TeamFormat;
 
-  @ManyToMany(() => UserEntity, (user) => user.teams)
+  @ManyToMany(() => AthleteEntity, (athlete) => athlete.teams)
   @JoinTable({
     name: 'teams_users',
     joinColumn: {
@@ -24,11 +24,11 @@ export class TeamEntity extends BaseEntity {
       referencedColumnName: 'id',
     },
     inverseJoinColumn: {
-      name: 'user_id',
+      name: 'athlete_id',
       referencedColumnName: 'id',
     },
   })
-  users: UserEntity[];
+  athletes: AthleteEntity[];
 
   @OneToMany(() => MatchEntity, (match) => match.winningTeam, {
     cascade: true,

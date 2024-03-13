@@ -16,9 +16,8 @@ export class FileEntity extends BaseEntity {
   @Column({ name: 'saved_name' })
   savedName: string;
 
-  @Column({ nullable: true, name: 'registration_id' })
-  registrationId: number;
-
+  @Column({ nullable: true })
+  registrationId: string;
   @ManyToOne(
     () => RegistrationEntity,
     (registration) => registration.paymentReceipts,

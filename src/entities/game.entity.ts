@@ -9,8 +9,8 @@ export enum WinningTeam {
 
 @Entity('games')
 export class GameEntity extends BaseEntity {
-  @Column({ nullable: true, name: 'match_id' })
-  matchId: number;
+  @Column({ nullable: true })
+  matchId: string;
   @ManyToOne(() => MatchEntity)
   @JoinColumn({ name: 'matchId' })
   match: MatchEntity;

@@ -7,11 +7,6 @@ export enum CompetitionType {
   SCRIMMAGE = 'Rachão',
 }
 
-export enum CompetitionFormat {
-  SINGLES = 'Individual',
-  DOUBLES = 'Dupla',
-}
-
 @Entity('competitions')
 export class CompetitionEntity extends BaseEntity {
   @Column()
@@ -19,6 +14,9 @@ export class CompetitionEntity extends BaseEntity {
 
   @Column()
   description: string;
+
+  @Column({ type: 'money' })
+  registrationPrice: number;
 
   @Column({ type: 'timestamptz', name: 'start_date' })
   startDate: Date;
@@ -34,13 +32,4 @@ export class CompetitionEntity extends BaseEntity {
 
   @Column({ type: 'text', name: 'team_format' })
   teamFormat: TeamFormat;
-
-  // @Column({ type: 'text', name: 'knockout_match_configuration_type' })
-  // knockoutMatchConfigurationType: MatchConfigurationType;
-
-  // @Column({ nullable: true, name: 'knockout_match_configuration_id' })
-  // knockoutMatchConfigurationId: number;
-  // @ManyToOne(() => MatchConfigurationEntity)
-  // @JoinColumn({ name: 'knockoutMatchConfigurationId' })
-  // knockoutMatchConfiguration: MatchConfigurationEntity;
 }

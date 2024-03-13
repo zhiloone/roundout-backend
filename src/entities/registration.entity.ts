@@ -19,14 +19,14 @@ export class RegistrationEntity extends BaseEntity {
   @Column({ nullable: true, name: 'rejection_reason' })
   rejectionReason: string;
 
-  @Column({ nullable: true, name: 'team_id' })
-  teamId: number;
+  @Column()
+  teamId: string;
   @ManyToOne(() => TeamEntity)
   @JoinColumn({ name: 'teamId' })
   team: TeamEntity;
 
-  @Column({ nullable: true, name: 'competition_id' })
-  competitionId: number;
+  @Column()
+  competitionId: string;
   @ManyToOne(() => CompetitionEntity)
   @JoinColumn({ name: 'competitionId' })
   competition: CompetitionEntity;

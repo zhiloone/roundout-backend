@@ -1,3 +1,5 @@
+# Ref: https://dev.to/earthcomfy/django-code-formatting-and-linting-made-easy-a-step-by-step-pre-commit-hook-tutorial-592f
+
 # Avoid formatting Django migration files
 exclude: .*migrations\/.*
 

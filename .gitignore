@@ -1,2 +1,5 @@
 # Environment variables
 .env*
+
+# Python cache files when running outside Docker
+**/__pycache__

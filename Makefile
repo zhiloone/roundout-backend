@@ -1,8 +1,10 @@
 run:
 	docker-compose up
 
+USER_ID := $(shell id -u)
+GROUP_ID := $(shell id -g)
 build:
-	docker-compose build
+	docker-compose build --build-arg USER_ID=$(USER_ID) --build-arg GROUP_ID=$(GROUP_ID)
 
 remove:
 	docker-compose down -v
@@ -15,9 +17,6 @@ pre-commit-install:
 
 pre-commit-run:
 	pre-commit run --all-files
-
-chmod:
-	sudo chmod 777 -R .
 
 app=
 # Create migrations, if they don't exist.
@@ -50,3 +49,15 @@ shell:
 
 createsuperuser:
 	docker-compose exec web python manage.py createsuperuser
+
+app=
+startapp:
+	@if [ -z "${app}" ]; then \
+		echo "Error: App name not specified."; \
+		echo "Please specify an app by typing app=app_name at the end of the command."; \
+		exit 1; \
+	fi
+	docker-compose exec web python manage.py startapp ${app}
+
+test:
+	docker-compose exec web python manage.py test

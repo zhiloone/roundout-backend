@@ -1,13 +1,12 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 
 from .managers import CustomUserManager
 
 
 class CustomUser(AbstractUser):
     username = None
-    email = models.EmailField(_("email address"), unique=True)
+    email = models.EmailField(unique=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
@@ -18,5 +17,8 @@ class CustomUser(AbstractUser):
         return self.email
 
     class Meta:
-        verbose_name = _("user")
-        verbose_name_plural = _("users")
+        verbose_name = "usuário"
+        verbose_name_plural = "usuários"
+
+
+# TODO: class Athlete

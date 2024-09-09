@@ -50,6 +50,10 @@ shell:
 createsuperuser:
 	docker-compose exec web python manage.py createsuperuser
 
+# Creates an admin based on the environment variables DJANGO_SUPERUSER_EMAIL and DJANGO_SUPERUSER_PASSWORD.
+createadmin:
+	docker-compose exec web python manage.py createsuperuser --no-input
+
 app=
 startapp:
 	@if [ -z "${app}" ]; then \

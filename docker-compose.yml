@@ -6,13 +6,9 @@ services:
     ports:
       - "5432:5432"
     env_file:
-      - ./.env.database.development
+      - ./.env.db.dev
     healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"
-        ]
+      test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB" ]
       interval: 2s
       timeout: 5s
       retries: 10
@@ -29,7 +25,7 @@ services:
         condition: service_healthy
         restart: true
     env_file:
-      - ./.env.development
+      - ./.env.dev
 
 volumes:
   postgres_data:

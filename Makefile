@@ -65,3 +65,12 @@ startapp:
 
 test:
 	docker-compose exec web python manage.py test
+
+# Create translation files
+locale=pt
+makemessages:
+	docker-compose exec web python manage.py makemessages -l ${locale}
+
+# Produce the translation binary .mo files that are used by gettext.
+compilemessages:
+	docker-compose exec web python manage.py compilemessages

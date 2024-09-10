@@ -1,8 +1,9 @@
 from django.apps import AppConfig
+from django.utils.translation import gettext_lazy as _
 
 
 class FacilitiesConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "facilities"
-    verbose_name = "Instalação"
-    verbose_name_plural = "Instalações"
+    verbose_name = _("Facility")
+    verbose_name_plural = _("Facilities")

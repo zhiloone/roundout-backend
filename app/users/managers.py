@@ -17,6 +17,8 @@ class CustomUserManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
+        # TODO: entender pq q aqui só é chamado pelo shell (createsuperuser) e não pelo form
+        # user.athlete_set.create()
         user.save()
         return user
 

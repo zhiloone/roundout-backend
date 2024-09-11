@@ -3,7 +3,8 @@ FROM python:3.11.4-slim-buster
 # Define work directory
 WORKDIR /usr/src/app
 
-# Set UID and GID
+# Set UID and GID so that the user outside the container can
+# access its data without needing to sudo
 ARG USER_ID=1000
 ARG GROUP_ID=1000
 

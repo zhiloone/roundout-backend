@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-10 11:49+0000\n"
+"POT-Creation-Date: 2024-09-11 08:31-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,33 +30,38 @@ msgstr "Usuários"
 msgid "The Email must be set"
 msgstr "O Email deve ser preenchido"
 
-#: users/managers.py:32
+#: users/managers.py:34
 msgid "Superuser must have is_staff=True."
 msgstr "Super usuário deve ter is_staff=True."
 
-#: users/managers.py:34
+#: users/managers.py:36
 msgid "Superuser must have is_superuser=True."
 msgstr "Super usuário deve ter is_superuser=True."
 
-#: users/models.py:21
+#: users/models.py:11
+msgid "name"
+msgstr "nome"
+
+#: users/models.py:12
+msgid "surname"
+msgstr "sobrenome"
+
+#: users/models.py:23 users/models.py:35
 msgid "user"
 msgstr "usuário"
 
-#: users/models.py:22
+#: users/models.py:24
 msgid "users"
 msgstr "usuários"
 
-#~ msgid "name"
-#~ msgstr "nome"
+#: users/models.py:36
+msgid "birthdate"
+msgstr "data de aniversário"
 
-#~ msgid "surname"
-#~ msgstr "sobrenome"
+#: users/models.py:42
+msgid "athlete"
+msgstr "atleta"
 
-#~ msgid "birthdate"
-#~ msgstr "data de aniversário"
-
-#~ msgid "athlete"
-#~ msgstr "atleta"
-
-#~ msgid "athletes"
-#~ msgstr "atletas"
+#: users/models.py:43
+msgid "athletes"
+msgstr "atletas"

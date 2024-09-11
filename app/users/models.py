@@ -8,9 +8,11 @@ from .managers import CustomUserManager
 class CustomUser(AbstractUser):
     username = None
     email = models.EmailField(unique=True)
+    first_name = models.CharField(_("name"), max_length=30)
+    surname = models.CharField(_("surname"), max_length=100)
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ["first_name", "surname"]
 
     objects = CustomUserManager()
 
@@ -21,24 +23,26 @@ class CustomUser(AbstractUser):
         verbose_name = _("user")
         verbose_name_plural = _("users")
 
+    def get_full_name(self):
+        full_name = f"{self.first_name} {self.surname}"
+        return full_name.strip()
 
-# TODO: WIP. Fazer com que ao criar usuários "normais" também sejam criados atletas nulos por padrão vinculados a ele
-# class Athlete(models.Model):
-#     first_name = models.CharField(_('name'), null=True, max_length=30)
-#     last_name = models.CharField(_('surname'), null=True, max_length=100)
-#     user = models.OneToOneField(CustomUser, on_delete=models.PROTECT, related_name='user', verbose_name=_('user'))
-#     birthdate = models.DateField(_('birthdate'), null=True)
+    def get_short_name(self):
+        return self.first_name
 
-#     def __str__(self):
-#         return self.get_full_name()
 
-#     class Meta:
-#         verbose_name = _('athlete')
-#         verbose_name_plural = _('athletes')
+class Athlete(models.Model):
+    user = models.OneToOneField(
+        CustomUser,
+        on_delete=models.PROTECT,
+        related_name="user",
+        verbose_name=_("user"),
+    )
+    birthdate = models.DateField(_("birthdate"), null=True)
 
-#     def get_full_name(self):
-#         full_name = '%s %s' % (self.first_name, self.last_name)
-#         return full_name.strip()
+    def __str__(self):
+        return self.user.get_full_name()
 
-#     def get_short_name(self):
-#         return self.first_name
+    class Meta:
+        verbose_name = _("athlete")
+        verbose_name_plural = _("athletes")

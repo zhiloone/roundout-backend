@@ -55,6 +55,9 @@ class Athlete(models.Model):
     def __str__(self):
         return self.user.get_full_name()
 
+    def get_full_name(self):
+        return self.user.get_full_name()
+
     class Meta:
         verbose_name = _("athlete")
         verbose_name_plural = _("athletes")

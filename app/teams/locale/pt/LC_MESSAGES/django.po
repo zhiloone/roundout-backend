@@ -16,12 +16,31 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: teams/apps.py:8
+msgid "Team"
+msgstr "Time"
 
-#: roundout/settings.py:123
-msgid "Portuguese"
-msgstr "Português"
+#: teams/apps.py:9
+msgid "Teams"
+msgstr "Times"
 
-#: roundout/settings.py:124
-msgid "English"
-msgstr "Inglês"
+#: teams/models.py:6
+msgid "name"
+msgstr "nome"
+
+#: teams/models.py:7
+msgid "athletes"
+msgstr "atletas"
+
+#: teams/models.py:8
+msgid "is active?"
+msgstr "está ativo?"
+
+#: teams/models.py:11
+msgid "team"
+msgstr "time"
+
+#: teams/models.py:12
+msgid "teams"
+msgstr "times"

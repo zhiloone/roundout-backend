@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-13 12:30-0300\n"
+"POT-Creation-Date: 2024-09-13 16:39-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -66,38 +66,38 @@ msgstr "Prefiro não informar"
 msgid "Other"
 msgstr "Outro"
 
-#: users/models.py:18
+#: users/models.py:19
 msgid "name"
 msgstr "nome"
 
-#: users/models.py:19
+#: users/models.py:20
 msgid "surname"
 msgstr "sobrenome"
 
-#: users/models.py:20
+#: users/models.py:22
 msgid "gender"
 msgstr "gênero"
 
-#: users/models.py:21
+#: users/models.py:24
 msgid "birthdate"
 msgstr "data de aniversário"
 
-#: users/models.py:32 users/models.py:48
+#: users/models.py:35 users/models.py:60
 msgid "user"
 msgstr "usuário"
 
-#: users/models.py:33
+#: users/models.py:36
 msgid "users"
 msgstr "usuários"
 
-#: users/models.py:50
+#: users/models.py:62
 msgid "score"
 msgstr "pontuação"
 
-#: users/models.py:56
+#: users/models.py:71
 msgid "athlete"
 msgstr "atleta"
 
-#: users/models.py:57
+#: users/models.py:72
 msgid "athletes"
 msgstr "atletas"

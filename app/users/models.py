@@ -4,12 +4,24 @@ from django.utils.translation import gettext_lazy as _
 
 from .managers import CustomUserManager
 
+GENDER_CHOICES = {
+    "M": _("Male"),
+    "F": _("Female"),
+    "NB": _("Non-binary"),
+    "X": _("Prefer not to say"),
+    "O": _("Other"),
+}
+
 
 class CustomUser(AbstractUser):
     username = None
     email = models.EmailField(unique=True)
     first_name = models.CharField(_("name"), max_length=30)
     surname = models.CharField(_("surname"), max_length=100)
+    gender = models.CharField(
+        _("gender"), choices=GENDER_CHOICES, blank=True, null=True
+    )
+    birthdate = models.DateField(_("birthdate"), blank=True, null=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "surname"]
@@ -17,7 +29,7 @@ class CustomUser(AbstractUser):
     objects = CustomUserManager()
 
     def __str__(self):
-        return self.email
+        return self.get_full_name()
 
     class Meta:
         verbose_name = _("user")
@@ -38,7 +50,7 @@ class Athlete(models.Model):
         related_name="user",
         verbose_name=_("user"),
     )
-    birthdate = models.DateField(_("birthdate"), null=True)
+    score = models.IntegerField(_("score"), default=1000)
 
     def __str__(self):
         return self.user.get_full_name()

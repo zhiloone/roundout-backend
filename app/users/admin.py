@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.utils.translation import gettext_lazy as _
 
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 from .models import Athlete, CustomUser
@@ -20,9 +21,13 @@ class CustomUserAdmin(UserAdmin):
         "is_active",
     )
     fieldsets = (
-        (None, {"fields": ("email", "password", "first_name", "surname")}),
+        (None, {"fields": ("email", "password")}),
         (
-            "Permissions",
+            _("Personal information"),
+            {"fields": ("first_name", "surname", "gender", "birthdate")},
+        ),
+        (
+            _("Permissions"),
             {"fields": ("is_staff", "is_active", "groups", "user_permissions")},
         ),
     )
@@ -37,6 +42,8 @@ class CustomUserAdmin(UserAdmin):
                     "password2",
                     "first_name",
                     "surname",
+                    "gender",
+                    "birthdate",
                     "is_staff",
                     "is_active",
                     "groups",
@@ -57,6 +64,17 @@ class CustomUserAdmin(UserAdmin):
         super().save_model(request, obj, form, change)  # Calls the default method
 
 
+class AthleteAdmin(admin.ModelAdmin):
+    list_display = ("user", "score")
+    search_fields = ("user__email", "user__first_name", "user__surname", "score")
+    fieldsets = ((None, {"fields": ("user", "score")}),)
+
+    def get_readonly_fields(self, request, obj=None):
+        if obj:  # When editing an existing object
+            return ["user"]  # Make 'user' a readonly field
+        return []
+
+
 # TODO: não permitir a edição do vínculo entre usuário e atleta
 admin.site.register(CustomUser, CustomUserAdmin)
-admin.site.register(Athlete)
+admin.site.register(Athlete, AthleteAdmin)
